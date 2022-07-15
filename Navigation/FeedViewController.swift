@@ -20,7 +20,6 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
@@ -29,27 +28,21 @@ class FeedViewController: UIViewController {
         view.addSubview(button)
         button.sizeToFit()
         button.center = view.center
-        
-        
-        
-
-        // Do any additional setup after loading the view.
     }
     
-
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     @objc private func buttonAction() {
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
         self.navigationController?.pushViewController(postViewController, animated: true)
     }
-
+    
 }

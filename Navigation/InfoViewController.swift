@@ -22,7 +22,7 @@ class InfoViewController: UIViewController {
         button.addTarget(self, action: #selector(tapClose), for: .touchUpInside)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemRed
@@ -45,22 +45,20 @@ class InfoViewController: UIViewController {
     //кнопка по нажатию отображается аллерт
     @objc private func tap() {
         let alertController = UIAlertController(title: "Alert", message: "Вы уверенны, что хотите зделать это?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Да", style: .default ) {_ in 
+        let okAction = UIAlertAction(title: "Да", style: .default ) {_ in
             print("okAction")
         }// кнопка на алерте
         let cancelAction = UIAlertAction(title: "Нет", style: .default) {_ in
-           print("cancelAction")
-       }
+            print("cancelAction")
+        }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
         print(#function)
-
     }
     
     @objc private func tapClose() {
         dismiss(animated: true)
     }
-
-
+    
 }

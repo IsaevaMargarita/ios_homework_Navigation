@@ -13,8 +13,6 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemMint
         navigationItem.title = "Профиль"
-        
-        // Do any additional setup after loading the view.
     }
     
     
