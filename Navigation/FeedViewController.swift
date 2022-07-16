@@ -22,12 +22,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-        navigationItem.title = "Лента"
-        
-        view.addSubview(button)
-        button.sizeToFit()
-        button.center = view.center
+        self.setupButton()
     }
     
     /*
@@ -43,6 +38,14 @@ class FeedViewController: UIViewController {
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
         self.navigationController?.pushViewController(postViewController, animated: true)
+    }
+    
+    private func setupButton() {
+        view.backgroundColor = .systemGreen
+        navigationItem.title = "Лента"
+        view.addSubview(button)
+        button.sizeToFit()
+        button.center = view.center
     }
     
 }
