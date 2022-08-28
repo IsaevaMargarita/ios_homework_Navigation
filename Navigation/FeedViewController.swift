@@ -25,6 +25,15 @@ class FeedViewController: UIViewController {
         self.setupButton()
     }
     
+    override func viewWillLayoutSubviews() {
+        button.frame = CGRect(
+            x: (view.frame.width/2 - button.frame.width/2),
+            y: (view.frame.height/2 - button.frame.height/2),
+            width: button.frame.width,
+            height: button.frame.height)
+        super.viewWillLayoutSubviews()
+    }
+    
     
     @objc private func buttonAction() {
         let postViewController = PostViewController()
@@ -34,10 +43,9 @@ class FeedViewController: UIViewController {
     
     private func setupButton() {
         view.backgroundColor = .systemGreen
-        navigationItem.title = "Лента"
+        navigationItem.title = "Feed"
         view.addSubview(button)
         button.sizeToFit()
-        button.center = view.center
     }
     
 }
