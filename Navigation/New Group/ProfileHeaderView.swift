@@ -47,10 +47,9 @@ class ProfileHeaderView: UIView {
     // MARK: - Кнопка
     lazy var button: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 16, y: 112, width: 350, height: 50)
+       // button.frame = CGRect(x: 16, y: 112, width: 350, height: 50)
         button.setTitle("Show status", for: .normal)
-        button.setTitle("Show status", for: .highlighted)
-        //  button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
@@ -60,4 +59,8 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
+    @objc private func buttonPressed() {
+        print("\(status.text ?? "status is emty")")
+    }
+
 }

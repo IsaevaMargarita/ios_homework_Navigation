@@ -28,6 +28,7 @@ class ProfileViewController2: UIViewController {
     override func viewWillLayoutSubviews() {
         profileHeaderView.frame = view.frame
         super.viewWillLayoutSubviews()
+        profileHeaderView.button.frame = CGRect(x: 16, y: 112, width: (view.frame.width - 32), height: 50)
     }
 
 }
