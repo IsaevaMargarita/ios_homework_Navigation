@@ -55,7 +55,7 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return self.wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-                let profileViewController = ProfileViewController2()
+                let profileViewController = ProfileViewController()
                 return self.wrappedInNavigationController(with: profileViewController, title: $0.title)
             }
         }
