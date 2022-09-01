@@ -25,15 +25,16 @@ class FeedViewController: UIViewController {
         self.setupButton()
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    override func viewWillLayoutSubviews() {
+        button.frame = CGRect(
+            x: (view.frame.width/2 - button.frame.width/2),
+            y: (view.frame.height/2 - button.frame.height/2),
+            width: button.frame.width,
+            height: button.frame.height)
+        super.viewWillLayoutSubviews()
+    }
+    
+    
     @objc private func buttonAction() {
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
@@ -42,10 +43,9 @@ class FeedViewController: UIViewController {
     
     private func setupButton() {
         view.backgroundColor = .systemGreen
-        navigationItem.title = "Лента"
+        navigationItem.title = "Feed"
         view.addSubview(button)
         button.sizeToFit()
-        button.center = view.center
     }
     
 }

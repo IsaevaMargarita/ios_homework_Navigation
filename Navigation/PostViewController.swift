@@ -28,7 +28,6 @@ class PostViewController: UIViewController {
     @objc private func tap () {
         let infoViewController = InfoViewController()
         infoViewController.modalPresentationStyle = .overCurrentContext
-        // self.navigationController?.pushViewController(infoViewController, animated: true)
         present(infoViewController, animated: true)
     }
 }

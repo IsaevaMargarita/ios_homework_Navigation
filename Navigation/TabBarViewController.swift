@@ -16,18 +16,18 @@ class TabBarViewController: UITabBarController {
         var title: String {
             switch self {
             case .feed:
-                return "Лента"
+                return "Feed"
             case .profile:
-                return "Профиль"
+                return "Profile"
             }
         }
         
         var icon: String {
             switch self {
             case .feed:
-                return "house"
+                return "house.fill"
             case .profile:
-                return "person"
+                return "person.fill"
             }
         }
         
@@ -47,6 +47,7 @@ class TabBarViewController: UITabBarController {
     }
     
     private func setupTabBar() {
+        tabBar.isTranslucent = false
         let dataSource: [TabBarItem] = [.feed, .profile]
         self.viewControllers = dataSource.map {
             switch $0 {
@@ -70,6 +71,13 @@ class TabBarViewController: UITabBarController {
     // MARK: - Navigation
     
     private func wrappedInNavigationController(with: UIViewController, title: Any?) -> UINavigationController {
-        return UINavigationController(rootViewController: with)
+        let navigationController = UINavigationController(rootViewController: with)
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.view.backgroundColor = .assetColor
+        return navigationController
     }
+}
+
+private extension UIColor {
+    static let assetColor = UIColor(named: "tabbarColor") ?? .clear
 }
