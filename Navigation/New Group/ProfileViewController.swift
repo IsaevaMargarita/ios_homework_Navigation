@@ -11,6 +11,7 @@ class ProfileViewController: UIViewController {
     
     private var profileHeaderView: ProfileHeaderView = {
         let view = ProfileHeaderView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -21,18 +22,13 @@ class ProfileViewController: UIViewController {
         addSubviews()
     }
     
-    override func viewWillLayoutSubviews() {
-        profileHeaderView.frame = view.frame
-        super.viewWillLayoutSubviews()
-        profileHeaderView.button.frame = CGRect(x: 16, y: 170, width: (view.frame.width - 32), height: 50)
-    }
-    
     private func addSubviews() {
         view.addSubview(profileHeaderView)
-        view.addSubview(profileHeaderView.name)
-        view.addSubview(profileHeaderView.avatarImage)
-        view.addSubview(profileHeaderView.statusLabel)
-        view.addSubview(profileHeaderView.button)
-        view.addSubview(profileHeaderView.statusTextField)
+        NSLayoutConstraint.activate([
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
+        ])
     }
 }
