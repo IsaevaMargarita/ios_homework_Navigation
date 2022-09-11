@@ -12,7 +12,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     // MARK: - Имя
     lazy var name: UILabel = {
         let nameLabel = UILabel()
-        //        nameLabel.frame = CGRect(x: 132, y: 27, width: 50, height: 20)
         nameLabel.text = "Super Mario"
         nameLabel.textColor = .black
         nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -26,8 +25,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         let mario = UIImageView()
         mario.image = UIImage(named: "Mario")
         mario.contentMode = .scaleAspectFill
-    //    mario.frame = CGRect(x: 16, y: 16, width: 100, height: 100)
-        mario.layer.cornerRadius = 50
+      mario.layer.cornerRadius = 50
         mario.layer.borderColor = UIColor.white.cgColor
         mario.layer.borderWidth = 3
         mario.clipsToBounds = true
@@ -38,7 +36,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     // MARK: - Подпись
     lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
-        statusLabel.frame = CGRect(x: 132, y: 84, width: 150, height: 20)
         statusLabel.text = statusText
         statusLabel.textColor = .gray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -66,7 +63,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     lazy var statusTextField: UITextField = {
         let statusTextField = UITextField()
         statusTextField.delegate = self
-        statusTextField.frame = CGRect(x: 132, y: 114, width: 200, height: 40)
         statusTextField.contentVerticalAlignment = .center
         statusTextField.textAlignment = .center
         statusTextField.placeholder = "\(statusText!)"
@@ -78,20 +74,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
-    }()
-    
-    lazy var newButtom: UIButton = {
-        let newButtom = UIButton()
-        newButtom.setTitle("Нажми на меня", for: .normal)
-        newButtom.backgroundColor = .systemGreen
-        newButtom.layer.cornerRadius = 4
-        newButtom.layer.shadowColor = UIColor.black.cgColor
-        newButtom.layer.shadowOffset = CGSize(width: 4, height: 4)
-        newButtom.layer.shadowRadius = 4
-        newButtom.layer.shadowOpacity = 0.7
-        newButtom.translatesAutoresizingMaskIntoConstraints = false
-        newButtom.isUserInteractionEnabled = false
-        return newButtom
     }()
     
     override init(frame: CGRect) {
@@ -111,45 +93,28 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         addSubview(statusLabel)
         addSubview(button)
         addSubview(statusTextField)
-        addSubview(newButtom)
         
         NSLayoutConstraint.activate([
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             avatarImage.heightAnchor.constraint(equalToConstant: 100),
-            avatarImage.widthAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        NSLayoutConstraint.activate([
+            avatarImage.widthAnchor.constraint(equalToConstant: 100),
+
             name.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            name.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
+            name.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+
             button.heightAnchor.constraint(equalToConstant: 50),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46)
-        ])
-        
-        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46),
+
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
             statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
-            newButtom.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            newButtom.heightAnchor.constraint(equalToConstant: 40),
-            newButtom.leadingAnchor.constraint(equalTo: leadingAnchor),
-            newButtom.trailingAnchor.constraint(equalTo: trailingAnchor)
-            
         ])
     }
     
