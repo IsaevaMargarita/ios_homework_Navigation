@@ -55,8 +55,8 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return self.wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-                let profileViewController = ProfileViewController()
-                return self.wrappedInNavigationController(with: profileViewController, title: $0.title)
+                let logInViewController = LogInViewController()
+                return self.wrappedInNavigationController(with: logInViewController, title: $0.title)
             }
         }
         self.viewControllers?.enumerated().forEach {
@@ -73,6 +73,7 @@ class TabBarViewController: UITabBarController {
     private func wrappedInNavigationController(with: UIViewController, title: Any?) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: with)
         navigationController.navigationBar.isTranslucent = false
+        navigationController.isNavigationBarHidden = true
         navigationController.view.backgroundColor = .assetColor
         return navigationController
     }
