@@ -63,7 +63,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     private lazy var loginButton: UIButton = {
        let button = UIButton()
         button.setTitle("Log In", for: .normal)
-        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapLogin), for: .touchUpInside)
         button.tintColor = .white
         button.backgroundColor = .systemGreen
         button.layer.cornerRadius = 10
@@ -86,13 +86,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         setupGestures()
     }
     
-    private func setupGestures() {
-        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
-        view.addGestureRecognizer(tapGestures)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.didShowKeyboard(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -103,18 +99,24 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
                                                object: nil)
     }
     
+    private func setupGestures() {
+        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        view.addGestureRecognizer(tapGestures)
+    }
+
     private func setup() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
     }
     
     private func addSubviews() {
         view.addSubview(scrollView)
-        textFieldContainer.addSubview(loginTextField)
-        textFieldContainer.addSubview(passwordTextField)
-        textFieldContainer.addSubview(textFieldSeparator)
         scrollView.addSubview(vkImage)
         scrollView.addSubview(textFieldContainer)
         scrollView.addSubview(loginButton)
+        textFieldContainer.addSubview(loginTextField)
+        textFieldContainer.addSubview(passwordTextField)
+        textFieldContainer.addSubview(textFieldSeparator)
     }
     
     private func setupConstraints() {
@@ -123,7 +125,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
             vkImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             vkImage.widthAnchor.constraint(equalToConstant: 100),
             vkImage.heightAnchor.constraint(equalToConstant: 100),
-            vkImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+            vkImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 120),
             
             textFieldContainer.topAnchor.constraint(equalTo: vkImage.bottomAnchor, constant: 120),
             textFieldContainer.heightAnchor.constraint(equalToConstant: 100),
@@ -157,10 +159,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         ])
     }
     
-    @objc private func tap () {
+    @objc private func tapLogin () {
         let profileViewController = ProfileViewController()
-        profileViewController.modalPresentationStyle = .overCurrentContext
-        present(profileViewController, animated: true)
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @objc private func didShowKeyboard(_ notification: Notification) {
@@ -168,15 +169,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
             let keyboardRectangle = keybourdFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            let loginBottomButtonPointY = self.textFieldContainer.frame.origin.y + self.loginButton.frame.origin.y + self.loginButton.frame.height
+            let loginBottomButtonPointY = self.loginButton.frame.origin.y +
+                self.loginButton.frame.height
             let keyboardOriginY = self.view.frame.height - keyboardHeight
-            
+
             let yOffset = keyboardOriginY < loginBottomButtonPointY
             ? loginBottomButtonPointY - keyboardOriginY + 16
             : 0
-            
-            print("!!! \(self.textFieldContainer.frame.origin.y), \(self.loginTextField.frame.origin.y), \(self.loginButton.frame.origin.y)")
-            
+
             self.scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
         }
     }
