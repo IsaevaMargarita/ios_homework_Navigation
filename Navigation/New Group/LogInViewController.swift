@@ -65,7 +65,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         button.setTitle("Log In", for: .normal)
         button.addTarget(self, action: #selector(tapLogin), for: .touchUpInside)
         button.tintColor = .white
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = UIColor(named: "Color")
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
