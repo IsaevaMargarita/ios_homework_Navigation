@@ -34,6 +34,12 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         navigationItem.title = "Profile"
         addSubviews()
+        
+    #if DEBUG
+        view.backgroundColor = .systemPink
+    #else
+        view.backgroundColor = .systemGray6
+    #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
