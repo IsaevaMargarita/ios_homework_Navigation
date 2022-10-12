@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var post = Post(title: "Пост")
+//    var post = Post(title: "Пост")
     
     
     private lazy var stackView: UIStackView = {
@@ -55,11 +55,11 @@ class FeedViewController: UIViewController {
         self.setupButton()
     }
     
-    @objc private func buttonAction() {
-        let postViewController = PostViewController()
-        postViewController.titlePost = post.title
-        self.navigationController?.pushViewController(postViewController, animated: true)
-    }
+//    @objc private func buttonAction() {
+//        let postViewController = PostViewController()
+//        postViewController.titlePost = post.title
+//        self.navigationController?.pushViewController(postViewController, animated: true)
+//    }
     
     @objc private func actionToProfile() {
         let profileViewController = ProfileViewController()
