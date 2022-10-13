@@ -105,16 +105,17 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
 
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+            
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
 
             button.heightAnchor.constraint(equalToConstant: 50),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46),
-
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
-            statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16)
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
     
