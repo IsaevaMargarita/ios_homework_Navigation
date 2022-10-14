@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
+    private let posts = Post.publications()
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
@@ -71,6 +73,11 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: \(post.views)"
     }
     
+    func makeFilter(post: Post) {
+        postImage.image = UIImage(named: post.image)
+    }
+//    ImageProcessor.processImage(configure())
+    
     private func setup() {
         addSubview(authorLabel)
         addSubview(postImage)
@@ -78,6 +85,10 @@ class PostTableViewCell: UITableViewCell {
         addSubview(likesLabel)
         addSubview(viewsLabel)
         backgroundColor = .clear
+//        ImageProcessor.processImage(
+//            sourceImage: postImage.image,
+//            filter: .colorInvert,
+//            completion: )
         
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
