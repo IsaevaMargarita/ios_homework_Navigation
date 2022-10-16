@@ -72,21 +72,13 @@ class PostTableViewCell: UITableViewCell {
         descriptionLabel.text = post.description
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
-        
 //        postImage.image = UIImage(named: post.image)
         guard let imagePost = UIImage(named: post.image) else {
-            postImage.image = nil // TODO: обработать ситуацию когда картинки нет
+            postImage.image = nil
             return
         }
-//        imageProcessor.processImage(sourceImage: imagePost, filter: .posterize) { image in
-//            postImage.image = image
-//        }
-        
-        imageProcessor.processImageAsync(sourceImage: imagePost, filter: .posterize) { [weak self] image in
-            guard let image = image else { return }
-            DispatchQueue.main.async {
-                self?.postImage.image = UIImage(cgImage: image)
-            }
+        imageProcessor.processImage(sourceImage: imagePost, filter: .transfer) { image in
+            postImage.image = image
         }
     }
     
