@@ -56,6 +56,8 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let imageProcessor = ImageProcessor()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -67,16 +69,26 @@ class PostTableViewCell: UITableViewCell {
     
     func configure(post: Post) {
         authorLabel.text = post.author
-        postImage.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
+        
+//        postImage.image = UIImage(named: post.image)
+        guard let imagePost = UIImage(named: post.image) else {
+            postImage.image = nil // TODO: обработать ситуацию когда картинки нет
+            return
+        }
+//        imageProcessor.processImage(sourceImage: imagePost, filter: .posterize) { image in
+//            postImage.image = image
+//        }
+        
+        imageProcessor.processImageAsync(sourceImage: imagePost, filter: .posterize) { [weak self] image in
+            guard let image = image else { return }
+            DispatchQueue.main.async {
+                self?.postImage.image = UIImage(cgImage: image)
+            }
+        }
     }
-    
-    func makeFilter(post: Post) {
-        postImage.image = UIImage(named: post.image)
-    }
-//    ImageProcessor.processImage(configure())
     
     private func setup() {
         addSubview(authorLabel)
@@ -85,10 +97,6 @@ class PostTableViewCell: UITableViewCell {
         addSubview(likesLabel)
         addSubview(viewsLabel)
         backgroundColor = .clear
-//        ImageProcessor.processImage(
-//            sourceImage: postImage.image,
-//            filter: .colorInvert,
-//            completion: )
         
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
