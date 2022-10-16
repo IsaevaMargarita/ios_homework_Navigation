@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UIView, UITextFieldDelegate {
     
@@ -93,29 +94,55 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         addSubview(statusLabel)
         addSubview(button)
         addSubview(statusTextField)
+
+        avatarImage.snp.makeConstraints { (make) -> Void in
+            make.top.leading.equalTo(16)
+            make.width.height.equalTo(100)
+        }
+        name.snp.makeConstraints { make in
+            make.top.equalTo(27)
+            make.leading.equalTo(avatarImage.snp.trailing).offset(16)
+        }
+        statusLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(statusTextField.snp.top).offset(-16)
+            make.leading.equalTo(avatarImage.snp.trailing).offset(16)
+        }
+        statusTextField.snp.makeConstraints { make in
+            make.height.equalTo(40)
+            make.trailing.equalTo(-16)
+            make.bottom.equalTo(button.snp.top).offset(-16)
+            make.leading.equalTo(avatarImage.snp.trailing).offset(16)
+        }
+        button.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.leading.equalTo(16)
+            make.top.equalTo(avatarImage.snp.bottom).offset(46)
+            make.trailing.bottom.equalTo(-16)
+        }
         
-        NSLayoutConstraint.activate([
-            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            avatarImage.heightAnchor.constraint(equalToConstant: 100),
-            avatarImage.widthAnchor.constraint(equalToConstant: 100),
+//        NSLayoutConstraint.activate([
+//            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+//            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+//            avatarImage.heightAnchor.constraint(equalToConstant: 100),
+//            avatarImage.widthAnchor.constraint(equalToConstant: 100),
 
-            name.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            name.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+//            name.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+//            name.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
 
-            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+//            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
+//            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+            
+//            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+//            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+//            statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
+//            statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
 
-            button.heightAnchor.constraint(equalToConstant: 50),
-            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46),
-
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
-            statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16)
-        ])
+//            button.heightAnchor.constraint(equalToConstant: 50),
+//            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+//            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+//            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46),
+//            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+//        ])
     }
     
     
