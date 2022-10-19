@@ -24,7 +24,7 @@ class FeedViewController: UIViewController {
     private lazy var firthButton: UIButton = {
         let button = UIButton()
         button.setTitle("Перейти в профиль", for: .normal)
-        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
         button.backgroundColor = .systemRed
         button.layer.cornerRadius = 5
         return button
@@ -33,20 +33,20 @@ class FeedViewController: UIViewController {
     private lazy var secondButton: UIButton = {
         let button = UIButton()
         button.setTitle("Перейти", for: .normal)
-        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 5
         return button
     }()
     
-//    private lazy var button: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("Перейти на пост", for: .normal)
-//        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-//        button.backgroundColor = .lightGray
-//        button.layer.cornerRadius = 5
-//        return button
-//    }()
+    private lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Перейти на пост", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 5
+        return button
+    }()
     
     
     
@@ -55,17 +55,17 @@ class FeedViewController: UIViewController {
         self.setupButton()
     }
     
-//    @objc private func buttonAction() {
-//        let postViewController = PostViewController()
+    @objc private func buttonAction() {
+        let postViewController = PostViewController()
 //        postViewController.titlePost = post.title
-//        self.navigationController?.pushViewController(postViewController, animated: true)
-//    }
-    
-    @objc private func actionToProfile() {
-        let profileViewController = ProfileViewController()
-      //  profileViewController.titlePost = pro.title
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+        self.navigationController?.pushViewController(postViewController, animated: true)
     }
+    
+//    @objc private func actionToProfile() {
+//        let profileViewController = ProfileViewController()
+//      //  profileViewController.titlePost = pro.title
+//        self.navigationController?.pushViewController(profileViewController, animated: true)
+//    }
     
     private func setupButton() {
         view.backgroundColor = .systemGreen

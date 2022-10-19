@@ -12,6 +12,8 @@ class ProfileViewController: UIViewController {
     
     let posts = Post.publications()
     
+    let user: User
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -24,6 +26,15 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
+    init(user: User){
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -31,13 +42,18 @@ class ProfileViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(tableView)
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+#if DEBUG
+        view.backgroundColor = .systemPink
+#else
+        view.backgroundColor = .systemGray6
+#endif
+        
     }
 }
 
@@ -63,6 +79,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let profileHeaderView = ProfileHeaderView()
+        profileHeaderView.configure(user: user)
         profileHeaderView.backgroundColor = .systemGray6
         return profileHeaderView
     }

@@ -55,7 +55,7 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-                let loginViewController = LogInViewController()
+                let loginViewController = LogInViewController(userService: CurrentUserService(currentUser: user))
                 return wrappedInNavigationController(with: loginViewController, title: $0.title)
             }
         }

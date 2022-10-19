@@ -119,6 +119,11 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         ])
     }
     
+    func configure(user: User){
+        name.text = user.fullName
+        avatarImage.image = user.avatar
+        statusLabel.text = user.status
+    }
     
     // MARK: - UITextFieldDelegate
     

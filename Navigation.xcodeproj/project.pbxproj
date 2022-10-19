@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8B061C9628AD35EF003808DA /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B061C9528AD35EF003808DA /* ProfileHeaderView.swift */; };
 		8B061C9828AD361B003808DA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B061C9728AD361B003808DA /* ProfileViewController.swift */; };
+		8B216E5728FDA67600DB8F3B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B216E5628FDA67600DB8F3B /* User.swift */; };
+		8B216E59290057C300DB8F3B /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B216E58290057C300DB8F3B /* TestUserService.swift */; };
 		8B216FE528748583004E6435 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B216FE428748583004E6435 /* InfoViewController.swift */; };
 		8B216FE7287874D5004E6435 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B216FE6287874D5004E6435 /* FeedViewController.swift */; };
 		8B216FEB2878C95C004E6435 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B216FEA2878C95C004E6435 /* TabBarViewController.swift */; };
@@ -69,6 +71,8 @@
 /* Begin PBXFileReference section */
 		8B061C9528AD35EF003808DA /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		8B061C9728AD361B003808DA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8B216E5628FDA67600DB8F3B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8B216E58290057C300DB8F3B /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		8B216FE428748583004E6435 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		8B216FE6287874D5004E6435 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		8B216FEA2878C95C004E6435 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				8B061C9528AD35EF003808DA /* ProfileHeaderView.swift */,
 				8B061C9728AD361B003808DA /* ProfileViewController.swift */,
 				8B44369A28D7A1D1006B7DD1 /* LogInViewController.swift */,
+				8B216E5628FDA67600DB8F3B /* User.swift */,
+				8B216E58290057C300DB8F3B /* TestUserService.swift */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -366,8 +372,10 @@
 				8B061C9828AD361B003808DA /* ProfileViewController.swift in Sources */,
 				8B216FEB2878C95C004E6435 /* TabBarViewController.swift in Sources */,
 				8B216FE528748583004E6435 /* InfoViewController.swift in Sources */,
+				8B216E59290057C300DB8F3B /* TestUserService.swift in Sources */,
 				8B44369B28D7A1D1006B7DD1 /* LogInViewController.swift in Sources */,
 				8BB3445A2867B77B0073DB17 /* SceneDelegate.swift in Sources */,
+				8B216E5728FDA67600DB8F3B /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
