@@ -55,6 +55,11 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
+#if DEBUG
+                let user = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test")!, status: "Test")
+#else
+                let user = User(login: "Mario", fullName: "Super Mario", avatar: UIImage(named: "Mario")!, status: "Hello")
+#endif
                 let loginViewController = LogInViewController(userService: CurrentUserService(currentUser: user))
                 return wrappedInNavigationController(with: loginViewController, title: $0.title)
             }
