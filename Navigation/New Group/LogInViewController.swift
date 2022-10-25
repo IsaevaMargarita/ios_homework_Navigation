@@ -84,7 +84,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         self.userService = userService
         super.init(nibName: nil, bundle: nil)
     }
-    
+   
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

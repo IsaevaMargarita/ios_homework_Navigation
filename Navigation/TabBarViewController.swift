@@ -55,12 +55,16 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-#if DEBUG
-                let user = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test")!, status: "Test")
-#else
+                //#if DEBUG
+                //                let user = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test")!, status: "Test")
+                //#else
                 let user = User(login: "Mario", fullName: "Super Mario", avatar: UIImage(named: "Mario")!, status: "Hello")
-#endif
+                //#endif
+#if DEBUG
+                let loginViewController = LogInViewController(userService: TestUserService())
+#else
                 let loginViewController = LogInViewController(userService: CurrentUserService(currentUser: user))
+#endif
                 return wrappedInNavigationController(with: loginViewController, title: $0.title)
             }
         }
@@ -78,7 +82,7 @@ class TabBarViewController: UITabBarController {
     private func wrappedInNavigationController(with: UIViewController, title: Any?) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: with)
         navigationController.navigationBar.isTranslucent = false
-//        navigationController.isNavigationBarHidden = true
+        //        navigationController.isNavigationBarHidden = true
         navigationController.view.backgroundColor = .assetColor
         return navigationController
     }

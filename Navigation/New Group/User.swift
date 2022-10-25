@@ -13,13 +13,13 @@ import UIKit
 final class User {
 var login: String
 var fullName: String
-var avatar: UIImage
+var avatar: UIImage?
 var status: String
     
     init(
         login: String,
         fullName: String,
-        avatar: UIImage,
+        avatar: UIImage?,
         status: String
     ) {
         self.login = login
@@ -51,13 +51,6 @@ final class CurrentUserService: UserServiceProtocol {
     }
     
 }
-
-
-
-//В существующий класс ProfileViewController добавьте свойство типа User и сделайте отображение этой информации на экране профиля, включая изображение аватара.
-
-//В класс LoginViewController добавьте функциональность получения информации о пользователе используя логин через CurrentUserService и передачу этой информации в ProfileViewController.
-//Проверьте, что ваша новая функциональность работает: если введен корректный логин, то информация о пользователе передается на экран профиля и там отображается. Если логин неверный, то должно выводиться сообщение о некорректных данных и перехода на профиль в этом случае не должно происходить.
 
 
 //// 1 -property injection через публичное свойство

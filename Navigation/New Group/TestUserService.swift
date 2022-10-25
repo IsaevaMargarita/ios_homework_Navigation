@@ -6,21 +6,25 @@
 //
 
 import Foundation
+import UIKit
 
 class TestUserService: UserServiceProtocol {
-    private let testUser: User
+    private let user: User
     
-    init( testUser: User
+    init( user: User
+          = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test"), status: "Test")
     ) {
-        self.testUser = testUser
+        self.user = user
     }
     
     func authorization(login: String) -> User? {
         
-        if login == testUser.login {
-            return testUser
+        if login == user.login {
+            return user
         } else {
             return nil
         }
     }
 }
+
+
