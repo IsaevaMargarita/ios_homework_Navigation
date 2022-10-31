@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate {
+    func check(login: String, password: String) -> Bool
+}
+
 class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
     
     let userService: UserServiceProtocol
+    let loginDelegate: LoginViewControllerDelegate
+    
 
     private var contentView: UIView = {
         let contentView = UIView()
@@ -80,8 +86,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         return scrollView
     }()
     
-    init( userService: UserServiceProtocol){
+    init( userService: UserServiceProtocol, loginDelegate: LoginViewControllerDelegate){
         self.userService = userService
+        self.loginDelegate = loginDelegate
         super.init(nibName: nil, bundle: nil)
     }
    
@@ -172,7 +179,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     @objc private func tapLogin () {
         guard let login = loginTextField.text,
-        let user = userService.authorization(login: login)  else {
+              let password = passwordTextField.text,
+              loginDelegate.check(login: login, password: password),
+        let user = userService.authorization(login: login) else {
             showError()
             return
         }

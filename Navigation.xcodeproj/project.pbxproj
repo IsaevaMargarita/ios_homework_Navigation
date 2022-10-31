@@ -28,6 +28,8 @@
 		8BB3445A2867B77B0073DB17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB344592867B77B0073DB17 /* SceneDelegate.swift */; };
 		8BB344612867B77E0073DB17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BB344602867B77E0073DB17 /* Assets.xcassets */; };
 		8BB344642867B77E0073DB17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BB344622867B77E0073DB17 /* LaunchScreen.storyboard */; };
+		B7D3FC0429099AEA002463AA /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D3FC0329099AEA002463AA /* Checker.swift */; };
+		B7D3FC062910161D002463AA /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D3FC052910161D002463AA /* LoginFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		8BB344602867B77E0073DB17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BB344632867B77E0073DB17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BB344652867B77E0073DB17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7D3FC0329099AEA002463AA /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		B7D3FC052910161D002463AA /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,8 @@
 				8B44369A28D7A1D1006B7DD1 /* LogInViewController.swift */,
 				8B216E5628FDA67600DB8F3B /* User.swift */,
 				8B216E58290057C300DB8F3B /* TestUserService.swift */,
+				B7D3FC0329099AEA002463AA /* Checker.swift */,
+				B7D3FC052910161D002463AA /* LoginFactory.swift */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -370,7 +376,9 @@
 				8B216FED287B5B07004E6435 /* PostViewController.swift in Sources */,
 				8B061C9628AD35EF003808DA /* ProfileHeaderView.swift in Sources */,
 				8B061C9828AD361B003808DA /* ProfileViewController.swift in Sources */,
+				B7D3FC0429099AEA002463AA /* Checker.swift in Sources */,
 				8B216FEB2878C95C004E6435 /* TabBarViewController.swift in Sources */,
+				B7D3FC062910161D002463AA /* LoginFactory.swift in Sources */,
 				8B216FE528748583004E6435 /* InfoViewController.swift in Sources */,
 				8B216E59290057C300DB8F3B /* TestUserService.swift in Sources */,
 				8B44369B28D7A1D1006B7DD1 /* LogInViewController.swift in Sources */,

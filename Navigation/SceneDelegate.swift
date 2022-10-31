@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = TabBarViewController()
+//        window?.rootViewController = TabBarViewController()
+        window?.rootViewController = LogInViewController(userService: UserService(), loginDelegate: LoginInspector())
         window?.makeKeyAndVisible()
         
     }
@@ -40,7 +41,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
        
     }
-    
-    
 }
 
