@@ -1,33 +1,12 @@
 //
-//  User.swift
+//  UserService.swift
 //  Navigation
 //
-//  Created by m.isaeva on 17.10.2022.
+//  Created by Margarita Isaeva on 01.11.2022.
 //
 
 import Foundation
 import UIKit
-
-
-
-final class User {
-var login: String
-var fullName: String
-var avatar: UIImage?
-var status: String
-    
-    init(
-        login: String,
-        fullName: String,
-        avatar: UIImage?,
-        status: String
-    ) {
-        self.login = login
-        self.fullName = fullName
-        self.avatar = avatar
-        self.status = status
-    }
-}
 
 protocol UserServiceProtocol {
     func authorization(login: String) -> User?
@@ -36,8 +15,7 @@ protocol UserServiceProtocol {
 final class CurrentUserService: UserServiceProtocol {
     private let currentUser: User
     
-    init( currentUser: User
-    ) {
+    init( currentUser: User = User(login: "Mario", fullName: "Super Mario", avatar: UIImage(named: "Mario")!, status: "Hello")) {
         self.currentUser = currentUser
     }
     

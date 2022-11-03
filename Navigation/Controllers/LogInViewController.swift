@@ -185,8 +185,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
             showError()
             return
         }
-        let profileViewController = ProfileViewController(user: user)
-        navigationController?.pushViewController(profileViewController, animated: true)
+        let tabbarViewController = TabBarViewController(user: user)
+        navigationController?.pushViewController(tabbarViewController, animated: true)
     }
     
     @objc private func didShowKeyboard(_ notification: Notification) {

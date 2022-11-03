@@ -14,7 +14,7 @@ class Checker {
     private let passwordTest: String
     
     private init() {
-         loginTest = "Test"
+         loginTest = "Mario"
          passwordTest = "123"
     }
     
@@ -31,5 +31,4 @@ class Checker {
         checker.check(login: login, password: password)
     }
 }
-
 

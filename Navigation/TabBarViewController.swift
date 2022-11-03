@@ -9,6 +9,8 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    let user: User
+    
     private enum TabBarItem: Int {
         case feed
         case profile
@@ -41,6 +43,15 @@ class TabBarViewController: UITabBarController {
         }
     }
     
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTabBar()
@@ -55,25 +66,8 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-                //#if DEBUG
-                //                let user = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test")!, status: "Test")
-                //#else
-                let user = User(login: "Mario", fullName: "Super Mario", avatar: UIImage(named: "Mario")!, status: "Hello")
-//#if DEBUG
-//                let loginViewController = LogInViewController(userService: TestUserService(), loginDelegate: <#LoginViewControllerDelegate#>)
-//#else
-//                let loginViewController = LogInViewController(userService: CurrentUserService(currentUser: user))
-//#endif
-//                return wrappedInNavigationController(with: loginViewController, title: $0.title)
-//
-                let userService: UserServiceProtocol
-                let loginDelegate: LoginViewControllerDelegate
-                #if DEBUG
-                userService = TestUserService()
-                #else
-                userService = CurrentUserService(currentUser: user)
-                #endif
-                let loginViewController = LogInViewController(userService: userService, loginDelegate: LoginViewControllerDelegate)
+                let profileViewController = ProfileViewController(user: user)
+                return wrappedInNavigationController(with: profileViewController, title: $0.title)
             }
         }
         self.viewControllers?.enumerated().forEach {

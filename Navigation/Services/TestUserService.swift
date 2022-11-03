@@ -11,9 +11,7 @@ import UIKit
 class TestUserService: UserServiceProtocol {
     private let user: User
     
-    init( user: User
-          = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test"), status: "Test")
-    ) {
+    init( user: User = User(login: "Test", fullName: "Super Test", avatar: UIImage(named: "test"), status: "Test")) {
         self.user = user
     }
     

@@ -11,13 +11,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
+    let loginFactory = MyLoginFactory()
+    
+#if DEBUG
+    let userService = TestUserService()
+#else
+    let userService = CurrentUserService()
+#endif
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-//        window?.rootViewController = TabBarViewController()
-        window?.rootViewController = LogInViewController(userService: UserService(), loginDelegate: LoginInspector())
+        let loginViewController = UINavigationController(rootViewController: LogInViewController(
+            userService: userService,
+            loginDelegate: loginFactory.makeLoginInspector())
+        )
+        window?.rootViewController = loginViewController
         window?.makeKeyAndVisible()
         
     }
@@ -31,15 +42,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
-     
+        
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-       
+        
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
-       
+        
     }
 }
 
