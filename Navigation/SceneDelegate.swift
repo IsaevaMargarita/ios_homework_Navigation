@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    let loginFactory = MyLoginFactory()
+    let factory = MyLoginFactory()
     
 #if DEBUG
     let userService = TestUserService()
@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let loginViewController = UINavigationController(rootViewController: LogInViewController(
             userService: userService,
-            loginDelegate: loginFactory.makeLoginInspector())
+            loginDelegate: factory.makeLoginInspector())
         )
         window?.rootViewController = loginViewController
         window?.makeKeyAndVisible()
