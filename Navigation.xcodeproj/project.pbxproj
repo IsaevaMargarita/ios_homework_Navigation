@@ -20,6 +20,7 @@
 		8BB3445A2867B77B0073DB17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB344592867B77B0073DB17 /* SceneDelegate.swift */; };
 		8BB344612867B77E0073DB17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BB344602867B77E0073DB17 /* Assets.xcassets */; };
 		8BB344642867B77E0073DB17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BB344622867B77E0073DB17 /* LaunchScreen.storyboard */; };
+		B7D3FC0F2913FC82002463AA /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D3FC0E2913FC82002463AA /* PhotosTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		8BB344602867B77E0073DB17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BB344632867B77E0073DB17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BB344652867B77E0073DB17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7D3FC0E2913FC82002463AA /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				8B527CB828F56881000C39BB /* PostTableViewCell.swift */,
+				B7D3FC0E2913FC82002463AA /* PhotosTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7D3FC0F2913FC82002463AA /* PhotosTableViewCell.swift in Sources */,
 				8B527CB928F56881000C39BB /* PostTableViewCell.swift in Sources */,
 				8BB344582867B77B0073DB17 /* AppDelegate.swift in Sources */,
 				8B216FE7287874D5004E6435 /* FeedViewController.swift in Sources */,

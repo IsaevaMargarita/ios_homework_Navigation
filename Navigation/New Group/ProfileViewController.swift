@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController {
         tableView.estimatedRowHeight = 50
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: .photosCellIdentifier)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: .postCellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -52,6 +53,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: .photosCellIdentifier, for: indexPath)
+            return cell
+        }
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: .postCellIdentifier, for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
@@ -69,6 +75,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
 private extension String {
     static let postCellIdentifier = "postCellIdentifier"
+    static let photosCellIdentifier = "photosCellIdentifier"
 }
 
 
