@@ -12,6 +12,8 @@ class PhotosTableViewCell: UITableViewCell {
     
     fileprivate let photos = Array(1...20)
     
+    weak var delegate: PhotosTableDelegate?
+    
     private lazy var headerlabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 24)
@@ -32,7 +34,7 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 12
+        layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
         layout.sectionInset = .zero
         return layout
@@ -56,7 +58,9 @@ class PhotosTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    private lazy var dataSource: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+    func configureGallery(delegate: PhotosTableDelegate) {
+        self.delegate = delegate
+    }
     
     private func setup() {
         backgroundColor = .clear
@@ -78,12 +82,12 @@ class PhotosTableViewCell: UITableViewCell {
             photoCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             photoCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             photoCollectionView.topAnchor.constraint(equalTo: headerlabel.bottomAnchor, constant: 12),
-            photoCollectionView.heightAnchor.constraint(equalToConstant: 50)
+            photoCollectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
 }
     
-extension PhotosTableViewCell:  UICollectionViewDelegate, UICollectionViewDataSource {
+extension PhotosTableViewCell:  UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         photos.count
     }
@@ -93,20 +97,22 @@ extension PhotosTableViewCell:  UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
         cell.setup(with: "\(photos[indexPath.row])")
-        //            cell.layer.cornerRadius = 6
-        //            cell.clipsToBounds = true
-        //            cell.backgroundColor = .systemBlue
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let insets = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
-        let interItemSpacing = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+        let insets = (photoCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        let interItemSpacing = (photoCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
 
-        let width = collectionView.frame.width - 3 * interItemSpacing - insets.left - insets.right
+        let width = photoCollectionView.frame.width - 3 * interItemSpacing - insets.left - insets.right
         let itemWidth = floor(width / 4)
-
+        print("🍏 \(itemWidth)")
         return CGSize(width: itemWidth, height: itemWidth)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.openGallery()
+        print("🍏 tap tap tap")
     }
 }
     

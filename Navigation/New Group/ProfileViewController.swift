@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+protocol PhotosTableDelegate: AnyObject {
+    func openGallery()
+}
+
+class ProfileViewController: UIViewController, PhotosTableDelegate {
     
     fileprivate let posts = Post.publications()
     
@@ -26,7 +30,18 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.isNavigationBarHidden = true
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    func openGallery() {
+        let photoViewController = PhotosViewController()
+        navigationController?.pushViewController(photoViewController, animated: true)
     }
     
     private func setupView() {
@@ -54,14 +69,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: .photosCellIdentifier, for: indexPath)
+            guard  let cell = tableView.dequeueReusableCell(withIdentifier: .photosCellIdentifier, for: indexPath) as? PhotosTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.configureGallery(delegate: self)
             return cell
         }
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: .postCellIdentifier, for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
-        
         cell.configure(post: posts[indexPath.row])
         return cell
     }
