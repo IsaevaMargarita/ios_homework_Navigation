@@ -37,6 +37,11 @@ class PhotosViewController: UIViewController {
         setup()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isTranslucent = true
+    }
+    
     private func setup() {
         view.backgroundColor = .white
         view.addSubview(photoCollectionView)
