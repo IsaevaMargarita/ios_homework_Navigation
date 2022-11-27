@@ -106,7 +106,6 @@ extension PhotosTableViewCell:  UICollectionViewDelegateFlowLayout, UICollection
 
         let width = photoCollectionView.frame.width - 3 * interItemSpacing - insets.left - insets.right
         let itemWidth = floor(width / 4)
-        print("🍏 \(itemWidth)")
         return CGSize(width: itemWidth, height: itemWidth)
     }
     
