@@ -104,10 +104,13 @@ class ProfileViewController: UIViewController, PhotosTableDelegate {
     
     @objc private func closeAnimation() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveLinear) {
-            self.avatarImage.center = CGPoint(x: 16.0, y: 16.0)
+            self.avatarImage.center = CGPoint(x: 66, y: 66)
             self.avatarImage.transform = .identity
+            print("👈")
+        } completion: { _ in
+            self.animationView.isHidden = true
+            print("tap")
         }
-        animationView.isHidden = true
         print("👈tap")
     }
 }
