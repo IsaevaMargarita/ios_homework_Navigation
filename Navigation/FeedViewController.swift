@@ -11,7 +11,6 @@ class FeedViewController: UIViewController {
     
 //    var post = Post(title: "Пост")
     
-    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.backgroundColor = .systemGreen
@@ -48,8 +47,6 @@ class FeedViewController: UIViewController {
 //        return button
 //    }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupButton()
@@ -62,7 +59,7 @@ class FeedViewController: UIViewController {
 //    }
     
     @objc private func actionToProfile() {
-        let profileViewController = ProfileViewController()
+        let profileViewController = PhotosViewController()
       //  profileViewController.titlePost = pro.title
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
