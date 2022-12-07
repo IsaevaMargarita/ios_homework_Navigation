@@ -23,12 +23,13 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     // MARK: - Аватарка
     lazy var avatarImage: UIImageView = {
         let mario = UIImageView()
-        mario.image = UIImage(named: "Mario")
-        mario.contentMode = .scaleAspectFill
-      mario.layer.cornerRadius = 50
-        mario.layer.borderColor = UIColor.white.cgColor
-        mario.layer.borderWidth = 3
         mario.clipsToBounds = true
+        mario.layer.borderWidth = 3
+        mario.layer.cornerRadius = 50
+        mario.contentMode = .scaleAspectFill
+        mario.image = UIImage(named: "Mario")
+        mario.layer.borderColor = UIColor.white.cgColor
+        mario.isUserInteractionEnabled = true
         mario.translatesAutoresizingMaskIntoConstraints = false
         return mario
     }()
@@ -36,26 +37,26 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     // MARK: - Подпись
     lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
+        statusLabel.sizeToFit()
         statusLabel.text = statusText
         statusLabel.textColor = .gray
-        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        statusLabel.sizeToFit()
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return statusLabel
     }()
     
     // MARK: - Кнопка
     lazy var button: UIButton = {
         let button = UIButton()
-        button.setTitle("Show status", for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowOpacity = 0.7
+        button.backgroundColor = .systemBlue
+        button.setTitle("Show status", for: .normal)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -63,19 +64,19 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     lazy var statusTextField: UITextField = {
         let statusTextField = UITextField()
         statusTextField.delegate = self
-        statusTextField.contentVerticalAlignment = .center
-        statusTextField.textAlignment = .center
-        statusTextField.placeholder = "\(statusText!)"
-        statusTextField.layer.cornerRadius = 12
-        statusTextField.layer.borderColor = UIColor.black.cgColor
-        statusTextField.layer.borderWidth = 1
-        statusTextField.backgroundColor = .white
         statusTextField.clipsToBounds = true
-        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        statusTextField.layer.borderWidth = 1
+        statusTextField.textAlignment = .center
+        statusTextField.layer.cornerRadius = 12
+        statusTextField.backgroundColor = .white
+        statusTextField.placeholder = "\(statusText!)"
+        statusTextField.contentVerticalAlignment = .center
+        statusTextField.layer.borderColor = UIColor.black.cgColor
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         return statusTextField
     }()
-    
+    //MARK: - Init
     override init(frame: CGRect) {
         super .init(frame: frame)
         setup()
@@ -88,21 +89,21 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     //MARK: - Auto Layout
     
     func setup() {
-        addSubview(avatarImage)
         addSubview(name)
-        addSubview(statusLabel)
         addSubview(button)
+        addSubview(statusLabel)
+        addSubview(avatarImage)
         addSubview(statusTextField)
         
         NSLayoutConstraint.activate([
+            avatarImage.widthAnchor.constraint(equalToConstant: 100),
+            avatarImage.heightAnchor.constraint(equalToConstant: 100),
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            avatarImage.heightAnchor.constraint(equalToConstant: 100),
-            avatarImage.widthAnchor.constraint(equalToConstant: 100),
-
+            
             name.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             name.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
-
+            
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
             
@@ -110,21 +111,21 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusTextField.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
             statusTextField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
-
+            
             button.heightAnchor.constraint(equalToConstant: 50),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            button.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 46)
         ])
     }
     
-    func configure(user: User){
+    func configure(user: User) {
         name.text = user.fullName
         avatarImage.image = user.avatar
         statusLabel.text = user.status
     }
-    
+
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

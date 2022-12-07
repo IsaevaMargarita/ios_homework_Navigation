@@ -8,11 +8,45 @@
 import UIKit
 import StorageService
 
-class ProfileViewController: UIViewController {
+protocol PhotosTableDelegate: AnyObject {
+    func openGallery()
+}
+
+class ProfileViewController: UIViewController, PhotosTableDelegate {
     
     let posts = Post.publications()
     
     let user: User
+    
+    private lazy var animationView: UIView = {
+        let animationView = UIView()
+        animationView.addBlurEffect()
+        animationView.isHidden = true
+        animationView.backgroundColor = .clear
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        return animationView
+    }()
+    
+    lazy var avatarImage: UIImageView = {
+        let mario = UIImageView()
+        mario.clipsToBounds = true
+        mario.layer.borderWidth = 3
+        mario.layer.cornerRadius = 50
+        mario.contentMode = .scaleAspectFill
+        mario.image = UIImage(named: "Mario")
+        mario.layer.borderColor = UIColor.white.cgColor
+        mario.translatesAutoresizingMaskIntoConstraints = false
+        return mario
+    }()
+    
+    private lazy var exitButton: UIButton = {
+       let button = UIButton()
+        button.imageView?.tintColor = .black
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(closeAnimation), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -21,6 +55,7 @@ class ProfileViewController: UIViewController {
         tableView.estimatedRowHeight = 50
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: .photosCellIdentifier)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: .postCellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -40,13 +75,42 @@ class ProfileViewController: UIViewController {
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    func openGallery() {
+        let photoViewController = PhotosViewController()
+        navigationController?.pushViewController(photoViewController, animated: true)
+    }
+    
     private func setupView() {
         view.addSubview(tableView)
+        view.addSubview(animationView)
+        animationView.addSubview(exitButton)
+        animationView.addSubview(avatarImage)
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            animationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            exitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            exitButton.heightAnchor.constraint(equalToConstant: 50),
+            exitButton.widthAnchor.constraint(equalToConstant: 50),
+            
+            avatarImage.widthAnchor.constraint(equalToConstant: 100),
+            avatarImage.heightAnchor.constraint(equalToConstant: 100),
+            avatarImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
         ])
 #if DEBUG
         view.backgroundColor = .systemPink
@@ -54,6 +118,18 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .systemGray6
 #endif
         
+    }
+    
+    @objc private func closeAnimation() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveLinear) {
+            self.avatarImage.center = CGPoint(x: 66, y: 66)
+            self.avatarImage.transform = .identity
+            print("👈")
+        } completion: { _ in
+            self.animationView.isHidden = true
+            print("tap")
+        }
+        print("👈tap")
     }
 }
 
@@ -69,10 +145,17 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if indexPath.row == 0 {
+            guard  let cell = tableView.dequeueReusableCell(withIdentifier: .photosCellIdentifier, for: indexPath) as? PhotosTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.configureGallery(delegate: self)
+            return cell
+        }
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: .postCellIdentifier, for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
-        
         cell.configure(post: posts[indexPath.row])
         return cell
     }
@@ -81,12 +164,46 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let profileHeaderView = ProfileHeaderView()
         profileHeaderView.configure(user: user)
         profileHeaderView.backgroundColor = .systemGray6
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        profileHeaderView.avatarImage.addGestureRecognizer(tapGestureRecognizer)
         return profileHeaderView
+    }
+    
+    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+        print("🍏")
+        animationView.isHidden = false
+        
+        let completion: () -> Void = { [weak self] in
+            self?.exitButton.isEnabled = true
+        }
+        self.layoutAnimationView(completion: completion)
+    }
+    
+    private func layoutAnimationView(completion: @escaping () -> Void) {
+        let sizeIncrease = self.animationView.frame.width/self.avatarImage.frame.width
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseInOut) {
+            self.avatarImage.center = CGPoint(x: self.animationView.center.x, y: self.animationView.center.y)
+            self.avatarImage.transform = CGAffineTransform(scaleX: sizeIncrease, y: sizeIncrease)
+        } completion: { _ in
+            completion()
+        }
     }
 }
 
 private extension String {
     static let postCellIdentifier = "postCellIdentifier"
+    static let photosCellIdentifier = "photosCellIdentifier"
+}
+
+extension UIView {
+    func addBlurEffect() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(blurEffectView)
+    }
 }
 
 
