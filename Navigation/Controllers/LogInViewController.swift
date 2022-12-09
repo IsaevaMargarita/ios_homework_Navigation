@@ -108,7 +108,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didShowKeyboard(_:)),
+                                               selector: #selector(didShowKeyboard(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
@@ -118,7 +118,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
     
     private func setupGestures() {
-        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(forcedHidingKeyboard))
         view.addGestureRecognizer(tapGestures)
     }
     
@@ -193,26 +193,30 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         if let keybourdFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keybourdFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            
+print("keyboardRectangle \(keyboardRectangle), keyboardHeight \(keyboardHeight)")
             let loginBottomButtonPointY = self.loginButton.frame.origin.y +
-                self.loginButton.frame.height
+                self.loginButton.frame.height + 16
             let keyboardOriginY = self.view.frame.height - keyboardHeight
-
+print("keyboardOriginY \(keyboardOriginY), loginBottomButtonPointY \(loginBottomButtonPointY)" )
             let yOffset = keyboardOriginY < loginBottomButtonPointY
-            ? loginBottomButtonPointY - keyboardOriginY + 16
+            ? loginBottomButtonPointY - keyboardOriginY + 32
             : 0
+            print("yOffset \(yOffset)")
+            
+            guard yOffset > 0 else { return }
 
-            self.scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
+//           scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
+            scrollView.setContentOffset(CGPoint(x: 0, y: yOffset), animated: true)
         }
     }
     
     @objc private func didHideKeyboard(_ notification: Notification) {
-        self.forcedHidingKeyboard()
+        forcedHidingKeyboard()
     }
     
     @objc private func forcedHidingKeyboard() {
-        self.view.endEditing(true)
-        self.scrollView.setContentOffset(.zero, animated: true)
+        view.endEditing(true)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)//.setContentOffset(.zero, animated: true)
     }
     
     private func showError() {
@@ -226,7 +230,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
         
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.forcedHidingKeyboard()
+            forcedHidingKeyboard()
             return true
         }
 }
