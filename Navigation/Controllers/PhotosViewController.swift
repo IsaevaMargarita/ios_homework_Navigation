@@ -7,10 +7,11 @@
 
 import Foundation
 import UIKit
+import iOSIntPackage
 
-class PhotosViewController: UIViewController {
+class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     
-    fileprivate let photos = Array(1...20)
+    fileprivate let photos = [UIImage]() //Array(1...20)
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -30,6 +31,8 @@ class PhotosViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var imagePublisherFacade = ImagePublisherFacade()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Photo Gallery"
@@ -39,7 +42,14 @@ class PhotosViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 10 )
         navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        imagePublisherFacade.removeSubscription(for: self)
     }
     
     private func setup() {
@@ -56,6 +66,7 @@ class PhotosViewController: UIViewController {
     }
 }
 
+// MARK: - Как отображать данные в коллекции
 extension PhotosViewController:  UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         photos.count
@@ -75,6 +86,11 @@ extension PhotosViewController:  UICollectionViewDelegateFlowLayout, UICollectio
         let width = photoCollectionView.frame.width - 2 * interItemSpacing - insets.left - insets.right
         let itemWidth = floor(width / 3)
         return CGSize(width: itemWidth, height: itemWidth)
+    }
+}
+
+extension PhotosViewController {
+    func receive(images: [UIImage]) {
     }
 }
     
