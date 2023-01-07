@@ -43,6 +43,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
+        textField.text = "Mario"
         textField.delegate = self
         textField.placeholder = "Email or phone"
         textField.backgroundColor = .systemGray6
@@ -52,6 +53,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.text = "123"
         textField.delegate = self
         textField.placeholder = "Password"
         textField.backgroundColor = .systemGray6
@@ -204,8 +206,6 @@ print("keyboardOriginY \(keyboardOriginY), loginBottomButtonPointY \(loginBottom
             print("yOffset \(yOffset)")
             
             guard yOffset > 0 else { return }
-
-//           scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
             scrollView.setContentOffset(CGPoint(x: 0, y: yOffset), animated: true)
         }
     }

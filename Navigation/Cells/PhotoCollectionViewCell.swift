@@ -30,6 +30,10 @@ class PhotoCollectionViewCell: UICollectionViewCell  {
         photo.image = UIImage(named: imageName)
     }
     
+    func setupPhotosCell(image: UIImage) {
+        photo.image = image
+    }
+    
     private func setupView() {
         self.addSubview(photo)
         

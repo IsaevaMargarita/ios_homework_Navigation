@@ -11,7 +11,7 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     
-    fileprivate let photos = [UIImage]() //Array(1...20)
+    var photos = [UIImage]() //Array(1...20)
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -76,7 +76,8 @@ extension PhotosViewController:  UICollectionViewDelegateFlowLayout, UICollectio
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .photosCellIdentifier, for: indexPath) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setup(with: "\(photos[indexPath.row])")
+        cell.setupPhotosCell(image: photos[indexPath.row])
+//      cell.setup(with: photos[indexPath.row])
         return cell
     }
     
@@ -90,8 +91,10 @@ extension PhotosViewController:  UICollectionViewDelegateFlowLayout, UICollectio
 }
 
 extension PhotosViewController {
-    func receive(images: [UIImage]) {
-    }
+        func receive(images: [UIImage]) {
+                photos = images
+                photoCollectionView.reloadData()
+            }
 }
     
 private extension String {
