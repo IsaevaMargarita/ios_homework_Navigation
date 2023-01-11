@@ -7,8 +7,16 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate {
+    func check(login: String, password: String) -> Bool
+}
+
 class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
     
+    let userService: UserServiceProtocol
+    let loginDelegate: LoginViewControllerDelegate
+    
+
     private var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = .white
@@ -35,6 +43,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
+        textField.text = "Mario"
         textField.delegate = self
         textField.placeholder = "Email or phone"
         textField.backgroundColor = .systemGray6
@@ -44,6 +53,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.text = "123"
         textField.delegate = self
         textField.placeholder = "Password"
         textField.backgroundColor = .systemGray6
@@ -78,6 +88,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         return scrollView
     }()
     
+    init( userService: UserServiceProtocol, loginDelegate: LoginViewControllerDelegate){
+        self.userService = userService
+        self.loginDelegate = loginDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+   
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -90,7 +110,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didShowKeyboard(_:)),
+                                               selector: #selector(didShowKeyboard(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
@@ -100,10 +120,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
     
     private func setupGestures() {
-        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        let tapGestures = UITapGestureRecognizer(target: self, action: #selector(forcedHidingKeyboard))
         view.addGestureRecognizer(tapGestures)
     }
-
+    
     private func setup() {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
@@ -160,38 +180,57 @@ class LogInViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
     
     @objc private func tapLogin () {
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+        guard let login = loginTextField.text,
+              let password = passwordTextField.text,
+              loginDelegate.check(login: login, password: password),
+        let user = userService.authorization(login: login) else {
+            showError()
+            return
+        }
+        let tabbarViewController = TabBarViewController(user: user)
+        navigationController?.pushViewController(tabbarViewController, animated: true)
     }
     
     @objc private func didShowKeyboard(_ notification: Notification) {
         if let keybourdFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keybourdFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            
+print("keyboardRectangle \(keyboardRectangle), keyboardHeight \(keyboardHeight)")
             let loginBottomButtonPointY = self.loginButton.frame.origin.y +
-                self.loginButton.frame.height
+                self.loginButton.frame.height + 16
             let keyboardOriginY = self.view.frame.height - keyboardHeight
-
+print("keyboardOriginY \(keyboardOriginY), loginBottomButtonPointY \(loginBottomButtonPointY)" )
             let yOffset = keyboardOriginY < loginBottomButtonPointY
-            ? loginBottomButtonPointY - keyboardOriginY + 16
+            ? loginBottomButtonPointY - keyboardOriginY + 32
             : 0
-
-            self.scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
+            print("yOffset \(yOffset)")
+            
+            guard yOffset > 0 else { return }
+            scrollView.setContentOffset(CGPoint(x: 0, y: yOffset), animated: true)
         }
     }
     
     @objc private func didHideKeyboard(_ notification: Notification) {
-        self.forcedHidingKeyboard()
+        forcedHidingKeyboard()
     }
     
     @objc private func forcedHidingKeyboard() {
-        self.view.endEditing(true)
-        self.scrollView.setContentOffset(.zero, animated: true)
+        view.endEditing(true)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)//.setContentOffset(.zero, animated: true)
+    }
+    
+    private func showError() {
+        let alertController = UIAlertController(title: "Ошибка", message: "Неверный логин", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Попробовать снова", style: .default ) {_ in
+            print("okAction")
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+
     }
         
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.forcedHidingKeyboard()
+            forcedHidingKeyboard()
             return true
         }
 }

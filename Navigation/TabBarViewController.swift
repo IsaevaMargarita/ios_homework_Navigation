@@ -9,6 +9,8 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    let user: User
+    
     private enum TabBarItem: Int {
         case feed
         case profile
@@ -41,6 +43,15 @@ class TabBarViewController: UITabBarController {
         }
     }
     
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTabBar()
@@ -55,8 +66,8 @@ class TabBarViewController: UITabBarController {
                 let feedViewController = FeedViewController()
                 return wrappedInNavigationController(with: feedViewController, title: $0.title)
             case .profile:
-                let loginViewController = LogInViewController()
-                return wrappedInNavigationController(with: loginViewController, title: $0.title)
+                let profileViewController = ProfileViewController(user: user)
+                return wrappedInNavigationController(with: profileViewController, title: $0.title)
             }
         }
         self.viewControllers?.enumerated().forEach {
@@ -73,7 +84,7 @@ class TabBarViewController: UITabBarController {
     private func wrappedInNavigationController(with: UIViewController, title: Any?) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: with)
         navigationController.navigationBar.isTranslucent = false
-//        navigationController.isNavigationBarHidden = true
+        //        navigationController.isNavigationBarHidden = true
         navigationController.view.backgroundColor = .assetColor
         return navigationController
     }
