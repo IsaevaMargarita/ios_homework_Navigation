@@ -20,10 +20,10 @@ class FeedViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var firthButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Перейти в профиль", for: .normal)
-//        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
+    private lazy var firthButton: CustomButton = {
+        let button = CustomButton(title: "Перейти на пост", titleColor: .white)
+        button.setTitle(button.title, for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.backgroundColor = .systemRed
         button.layer.cornerRadius = 5
         return button
@@ -32,7 +32,7 @@ class FeedViewController: UIViewController {
     private lazy var secondButton: UIButton = {
         let button = UIButton()
         button.setTitle("Перейти", for: .normal)
-//        button.addTarget(self, action: #selector(actionToProfile), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 5
         return button
@@ -55,7 +55,6 @@ class FeedViewController: UIViewController {
     @objc private func buttonAction() {
         let postViewController = PostViewController()
 //        postViewController.titlePost = post.title
-
        navigationController?.pushViewController(postViewController, animated: true)
     }
     
